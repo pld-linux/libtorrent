@@ -2,14 +2,17 @@ Summary:	LibTorrent - a BitTorrent library written in C++ for Unix
 Summary(pl):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
 Version:	0.6.5
-Release:	0.1
+Release:	1
 License:	GPL v2
 Group:		Libraries
 Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
 # Source0-md5:	19546b552dc02a4b78328e5630317a3f
 URL:		http://libtorrent.rakshasa.no/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -55,6 +58,10 @@ Statyczna biblioteka libtorrent.
 %setup -q
 
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__automake}
 %configure \
 	--%{?debug:en}%{!?debug:dis}able-debug \
 	--enable-static
@@ -65,10 +72,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-# XXX: is it really needed??? libtool should do this
-cd $RPM_BUILD_ROOT%{_libdir}
-ln -sf libtorrent.so.*.*.* libtorrent.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT

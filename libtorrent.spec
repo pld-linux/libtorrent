@@ -13,6 +13,7 @@ BuildRequires:	automake
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
+BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 

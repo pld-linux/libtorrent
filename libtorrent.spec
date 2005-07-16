@@ -36,6 +36,7 @@ Summary(pl):	Pliki programistyczne libtorrent
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libsigc++-devel >= 2.0
+Requires:	openssl-devel >= 0.9.7d
 
 %description devel
 Development files for libtorrent.

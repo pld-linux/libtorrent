@@ -1,0 +1,24 @@
+--- libtorrent/src/protocol/peer_connection_base.cc
++++ libtorrent/src/protocol/peer_connection_base.cc
+@@ -77,8 +77,8 @@
+   if (m_download == NULL)
+     throw internal_error("PeerConnection::~PeerConnection() m_fd is valid but m_state and/or m_net is NULL");
+ 
+-  m_up->set_choked(false);
+   m_download->choke_manager()->disconnected(this);
++  m_up->set_choked(true);
+ 
+   pollCustom->remove_read(this);
+   pollCustom->remove_write(this);
+@@ -299,8 +299,10 @@
+   uint32_t bytes = quota - left;
+ 
+   m_downRate.insert(bytes);
+-  m_downThrottle->used(bytes);
+ 
++  if (is_down_throttled() && !m_downThrottle->is_unlimited())
++    m_downThrottle->used(std::min<uint32_t>(bytes, m_downThrottle->get_quota()));
++
+   throttleRead.get_rate_slow().insert(bytes);
+   throttleRead.get_rate_quick().insert(bytes);
+   m_download->get_down_rate().insert(bytes);

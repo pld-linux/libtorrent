@@ -1,13 +1,12 @@
 Summary:	LibTorrent - a BitTorrent library written in C++ for Unix
 Summary(pl):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
-Version:	0.7.4
-Release:	2
+Version:	0.7.5
+Release:	1
 License:	GPL v2
 Group:		Libraries
 Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	8d17261c6c6931f530f69ba817c32100
-Patch0:		%{name}-throttle2.patch
+# Source0-md5:	757173418ef003d897d6e58bd761cea1
 URL:		http://libtorrent.rakshasa.no/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -58,7 +57,6 @@ Statyczna biblioteka libtorrent.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__libtoolize}

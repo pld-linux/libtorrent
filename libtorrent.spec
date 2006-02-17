@@ -16,7 +16,6 @@ URL:		http://libtorrent.rakshasa.no/
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pkgconfig
-BuildRequires:	xfsprogs-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description

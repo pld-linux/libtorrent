@@ -13,6 +13,7 @@ Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
 # Source0-md5:	a54777817072b221e65956caed09c8fb
 Patch0:		%{name}-inttypes.patch
 URL:		http://libtorrent.rakshasa.no/
+BuildRequires:	automake
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pkgconfig
@@ -62,6 +63,7 @@ Statyczna biblioteka libtorrent.
 %patch0 -p1
 
 %build
+cp /usr/share/automake/config.sub .
 %configure \
 	--%{?debug:en}%{!?debug:dis}able-debug \
 	%{?with_static_libs:--enable-static}

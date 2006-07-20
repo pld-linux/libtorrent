@@ -14,9 +14,10 @@ Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
 Patch0:		%{name}-inttypes.patch
 Patch1:		%{name}-static_libs.patch
 URL:		http://libtorrent.rakshasa.no/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libsigc++-devel >= 2.0
+BuildRequires:	libtool >= 2:1.5
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -65,10 +66,15 @@ Statyczna biblioteka libtorrent.
 %patch0 -p1
 %patch1 -p1
 
+# from libtool 1.9f, autoconf 2.60 can't stand it (endless recursion)
+rm -f scripts/{libtool,lt*}.m4
+
 %build
+%{__libtoolize}
 %{__aclocal} -I scripts
 %{__autoconf}
-cp /usr/share/automake/config.sub .
+%{__autoheader}
+%{__automake}
 
 %configure \
 	--%{?debug:en}%{!?debug:dis}able-debug \

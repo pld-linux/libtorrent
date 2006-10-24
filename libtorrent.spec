@@ -11,7 +11,6 @@ License:	GPL v2
 Group:		Libraries
 Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
 # Source0-md5:	8697a637db74f42fa23acbee03fa1734
-Patch0:		%{name}-inttypes.patch
 URL:		http://libtorrent.rakshasa.no/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -62,7 +61,6 @@ Statyczna biblioteka libtorrent.
 
 %prep
 %setup -q
-%patch0 -p1
 
 # from libtool 1.9f, autoconf 2.60 can't stand it (endless recursion)
 rm -f scripts/{libtool,lt*}.m4

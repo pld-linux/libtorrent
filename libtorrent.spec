@@ -21,10 +21,11 @@ BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-LibTorrent is a BitTorrent library written in C++ for Unix. It is
-designed to avoid the redundant buffers and data copying that most
-(all?) other BitTorrent implementations suffer from. The library is
-single-threaded and the client handles the select loop.
+LibTorrent is a BitTorrent library written in C++ for *nix, with a
+focus on high performance and good code. The library differentiates
+itself from other implementations by transfering directly from file
+pages to the network stack. On high-bandwidth connections it is able
+to seed at 3 times the speed of the official client.
 
 %description -l pl
 LibTorrent to biblioteka BitTorrenta napisana w C++ dla Uniksa. Jest

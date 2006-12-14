@@ -1,0 +1,43 @@
+--- libtorrent-0.11.0/src/torrent/peer/client_list.cc.orig	2006-11-18 18:20:26.000000000 +0100
++++ libtorrent-0.11.0/src/torrent/peer/client_list.cc	2006-12-14 09:58:18.868810219 +0100
+@@ -80,7 +80,7 @@
+ 
+   insert_helper(ClientInfo::TYPE_COMPACT, "A", NULL, NULL, "ABC");
+   insert_helper(ClientInfo::TYPE_COMPACT, "T", NULL, NULL, "BitTornado");
+-  insert_helper(ClientInfo::TYPE_COMPACT, "S", NULL, NULL, "Shadow's client");
++  insert_helper(ClientInfo::TYPE_COMPACT, "S", NULL, NULL, "Shadow's");
+   insert_helper(ClientInfo::TYPE_COMPACT, "U", NULL, NULL, "UPnP NAT BitTorrent");
+   insert_helper(ClientInfo::TYPE_COMPACT, "O", NULL, NULL, "Osprey Permaseed");
+ }
+@@ -146,6 +146,13 @@
+       std::isxdigit(id[3]) && std::isxdigit(id[4]) && std::isxdigit(id[5]) && std::isxdigit(id[6])) {
+     dest->set_type(ClientInfo::TYPE_AZUREUS);
+ 
++    // incoming connection with spoofed id
++    if (id[1] == 'l' && id[2] == 't' && !std::strncmp(id.c_str()+16, "UDP0", 4)) {
++      *dest = *begin();
++      std::memset(dest->mutable_upper_version(), 0, ClientInfo::max_version_size);
++      return false;
++    }
++
+     dest->mutable_key()[0] = id[1];
+     dest->mutable_key()[1] = id[2];
+     
+@@ -159,9 +166,16 @@
+     dest->mutable_key()[0] = id[0];
+     dest->mutable_key()[1] = '\0';
+     
++    // T03G = BitTornado 0.3.16
++    char id3;
++    if (id[3] > 'F' && id[3] < 'a')
++      id3 = id[3] - 'F' + 0xF;
++    else
++      id3 = rak::hexchar_to_value(id[3]);
++
+     dest->mutable_version()[0] = dest->mutable_upper_version()[0] = rak::hexchar_to_value(id[1]);
+     dest->mutable_version()[1] = dest->mutable_upper_version()[1] = rak::hexchar_to_value(id[2]);
+-    dest->mutable_version()[2] = dest->mutable_upper_version()[2] = rak::hexchar_to_value(id[3]);
++    dest->mutable_version()[2] = dest->mutable_upper_version()[2] = id3;
+     dest->mutable_version()[3] = dest->mutable_upper_version()[3] = '\0';
+ 
+   } else if (std::isalpha(id[0]) && std::isdigit(id[1]) && id[2] == '-' &&

@@ -1,6 +1,23 @@
 --- libtorrent-0.11.1/src/torrent/peer/client_list.cc.orig	2006-11-18 18:20:26.000000000 +0100
-+++ libtorrent-0.11.1/src/torrent/peer/client_list.cc	2007-01-07 06:48:11.778801263 +0100
-@@ -80,7 +80,7 @@
++++ libtorrent-0.11.1/src/torrent/peer/client_list.cc	2007-01-20 19:30:49.769650888 +0100
+@@ -63,7 +63,7 @@
+   insert_helper(ClientInfo::TYPE_AZUREUS, "LP", NULL, NULL, "Lphant");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "KT", NULL, NULL, "KTorrent");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "BX", NULL, NULL, "Bittorrent X");
+-  insert_helper(ClientInfo::TYPE_AZUREUS, "TS", NULL, NULL, "Torrentstorm");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "TS", NULL, NULL, "TorrentStorm");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "TN", NULL, NULL, "TorrentDotNET");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "TR", NULL, NULL, "Transmission");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "SS", NULL, NULL, "SwarmScope");
+@@ -77,10 +77,15 @@
+   insert_helper(ClientInfo::TYPE_AZUREUS, "SZ", NULL, NULL, "Shareaza");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "RT", NULL, NULL, "Retriever");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "CD", NULL, NULL, "Enhanced CTorrent");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "DE", NULL, NULL, "Deluge");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "SN", NULL, NULL, "ShareNet");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "UL", NULL, NULL, "uLeecher");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "pX", NULL, NULL, "pHoeniX");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "qB", NULL, NULL, "qBittorrent");
  
    insert_helper(ClientInfo::TYPE_COMPACT, "A", NULL, NULL, "ABC");
    insert_helper(ClientInfo::TYPE_COMPACT, "T", NULL, NULL, "BitTornado");
@@ -9,7 +26,7 @@
    insert_helper(ClientInfo::TYPE_COMPACT, "U", NULL, NULL, "UPnP NAT BitTorrent");
    insert_helper(ClientInfo::TYPE_COMPACT, "O", NULL, NULL, "Osprey Permaseed");
  }
-@@ -146,6 +146,13 @@
+@@ -146,6 +151,13 @@
        std::isxdigit(id[3]) && std::isxdigit(id[4]) && std::isxdigit(id[5]) && std::isxdigit(id[6])) {
      dest->set_type(ClientInfo::TYPE_AZUREUS);
  
@@ -23,7 +40,7 @@
      dest->mutable_key()[0] = id[1];
      dest->mutable_key()[1] = id[2];
      
-@@ -153,15 +160,22 @@
+@@ -153,15 +165,22 @@
        dest->mutable_version()[i] = dest->mutable_upper_version()[i] = rak::hexchar_to_value(id[3 + i]);
  
    } else if (std::isalpha(id[0]) && id[4] == '-' &&

@@ -1,32 +1,40 @@
---- libtorrent-0.11.1/src/torrent/peer/client_list.cc.orig	2006-11-18 18:20:26.000000000 +0100
-+++ libtorrent-0.11.1/src/torrent/peer/client_list.cc	2007-01-20 19:30:49.769650888 +0100
-@@ -63,7 +63,7 @@
-   insert_helper(ClientInfo::TYPE_AZUREUS, "LP", NULL, NULL, "Lphant");
-   insert_helper(ClientInfo::TYPE_AZUREUS, "KT", NULL, NULL, "KTorrent");
+--- libtorrent-0.11.2/src/torrent/peer/client_list.cc.orig	2007-01-21 16:10:26.000000000 +0100
++++ libtorrent-0.11.2/src/torrent/peer/client_list.cc	2007-01-24 20:31:05.337020232 +0100
+@@ -73,7 +73,7 @@
    insert_helper(ClientInfo::TYPE_AZUREUS, "BX", NULL, NULL, "Bittorrent X");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "BS", NULL, NULL, "BTSlave");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "CT", NULL, NULL, "CTorrent");
+-  insert_helper(ClientInfo::TYPE_AZUREUS, "DE", NULL, NULL, "DelugeTorrent");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "DE", NULL, NULL, "Deluge");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "ES", NULL, NULL, "Electric Sheep");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "LP", NULL, NULL, "Lphant");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "MT", NULL, NULL, "MoonlightTorrent");
+@@ -84,13 +84,13 @@
+   insert_helper(ClientInfo::TYPE_AZUREUS, "SS", NULL, NULL, "SwarmScope");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "SB", NULL, NULL, "Swiftbit");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "TN", NULL, NULL, "TorrentDotNET");
 -  insert_helper(ClientInfo::TYPE_AZUREUS, "TS", NULL, NULL, "Torrentstorm");
 +  insert_helper(ClientInfo::TYPE_AZUREUS, "TS", NULL, NULL, "TorrentStorm");
-   insert_helper(ClientInfo::TYPE_AZUREUS, "TN", NULL, NULL, "TorrentDotNET");
    insert_helper(ClientInfo::TYPE_AZUREUS, "TR", NULL, NULL, "Transmission");
-   insert_helper(ClientInfo::TYPE_AZUREUS, "SS", NULL, NULL, "SwarmScope");
-@@ -77,10 +77,15 @@
-   insert_helper(ClientInfo::TYPE_AZUREUS, "SZ", NULL, NULL, "Shareaza");
-   insert_helper(ClientInfo::TYPE_AZUREUS, "RT", NULL, NULL, "Retriever");
-   insert_helper(ClientInfo::TYPE_AZUREUS, "CD", NULL, NULL, "Enhanced CTorrent");
-+  insert_helper(ClientInfo::TYPE_AZUREUS, "DE", NULL, NULL, "Deluge");
-+  insert_helper(ClientInfo::TYPE_AZUREUS, "SN", NULL, NULL, "ShareNet");
-+  insert_helper(ClientInfo::TYPE_AZUREUS, "UL", NULL, NULL, "uLeecher");
-+  insert_helper(ClientInfo::TYPE_AZUREUS, "pX", NULL, NULL, "pHoeniX");
-+  insert_helper(ClientInfo::TYPE_AZUREUS, "qB", NULL, NULL, "qBittorrent");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "XT", NULL, NULL, "XanTorrent");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "ZT", NULL, NULL, "ZipTorrent");
  
    insert_helper(ClientInfo::TYPE_COMPACT, "A", NULL, NULL, "ABC");
-   insert_helper(ClientInfo::TYPE_COMPACT, "T", NULL, NULL, "BitTornado");
 -  insert_helper(ClientInfo::TYPE_COMPACT, "S", NULL, NULL, "Shadow's client");
 +  insert_helper(ClientInfo::TYPE_COMPACT, "S", NULL, NULL, "Shadow's");
    insert_helper(ClientInfo::TYPE_COMPACT, "U", NULL, NULL, "UPnP NAT BitTorrent");
    insert_helper(ClientInfo::TYPE_COMPACT, "O", NULL, NULL, "Osprey Permaseed");
+ 
+@@ -103,6 +103,8 @@
+   insert_helper(ClientInfo::TYPE_AZUREUS, "HL", NULL, NULL, "Halite");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "qB", NULL, NULL, "qBittorrent");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "UL", NULL, NULL, "uLeecher!");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "SN", NULL, NULL, "ShareNet");
++  insert_helper(ClientInfo::TYPE_AZUREUS, "pX", NULL, NULL, "pHoeniX");
+ 
+   insert_helper(ClientInfo::TYPE_COMPACT, "R", NULL, NULL, "Tribler");
  }
-@@ -146,6 +151,13 @@
+@@ -168,6 +170,13 @@
        std::isxdigit(id[3]) && std::isxdigit(id[4]) && std::isxdigit(id[5]) && std::isxdigit(id[6])) {
      dest->set_type(ClientInfo::TYPE_AZUREUS);
  
@@ -40,7 +48,7 @@
      dest->mutable_key()[0] = id[1];
      dest->mutable_key()[1] = id[2];
      
-@@ -153,15 +165,22 @@
+@@ -175,15 +184,22 @@
        dest->mutable_version()[i] = dest->mutable_upper_version()[i] = rak::hexchar_to_value(id[3 + i]);
  
    } else if (std::isalpha(id[0]) && id[4] == '-' &&

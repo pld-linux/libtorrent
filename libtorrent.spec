@@ -3,7 +3,7 @@
 %bcond_without	static_libs	# don't build static library
 #
 Summary:	LibTorrent - a BitTorrent library written in C++ for Unix
-Summary(pl):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
+Summary(pl.UTF-8):   LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
 Version:	0.11.2
 Release:	1
@@ -28,16 +28,16 @@ itself from other implementations by transfering directly from file
 pages to the network stack. On high-bandwidth connections it is able
 to seed at 3 times the speed of the official client.
 
-%description -l pl
+%description -l pl.UTF-8
 LibTorrent to biblioteka BitTorrenta napisana w C++ dla Uniksa. Jest
-zaprojektowana aby unikn±æ nadmiarowego kopiowania buforów i danych,
-bêd±cego wad± wiêkszo¶ci (wszystkich?) innych implementacji
-BitTorrenta. Biblioteka jest jednow±tkowa, klient obs³uguje pêtlê
+zaprojektowana aby uniknÄ…Ä‡ nadmiarowego kopiowania buforÃ³w i danych,
+bÄ™dÄ…cego wadÄ… wiÄ™kszoÅ›ci (wszystkich?) innych implementacji
+BitTorrenta. Biblioteka jest jednowÄ…tkowa, klient obsÅ‚uguje pÄ™tlÄ™
 select.
 
 %package devel
 Summary:	Development files for libtorrent
-Summary(pl):	Pliki programistyczne libtorrent
+Summary(pl.UTF-8):   Pliki programistyczne libtorrent
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libsigc++-devel >= 2.0
@@ -46,19 +46,19 @@ Requires:	openssl-devel >= 0.9.7d
 %description devel
 Development files for libtorrent.
 
-%description devel -l pl
+%description devel -l pl.UTF-8
 Pliki programistyczne libtorrent.
 
 %package static
 Summary:	Static libtorrent library
-Summary(pl):	Statyczna biblioteka libtorrent
+Summary(pl.UTF-8):   Statyczna biblioteka libtorrent
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static libtorrent library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka libtorrent.
 
 %prep

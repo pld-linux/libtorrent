@@ -95,7 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README
+%doc AUTHORS README TODO
 %attr(755,root,root) %{_libdir}/libtorrent.so.*.*.*
 
 %files devel

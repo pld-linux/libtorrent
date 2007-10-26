@@ -26,9 +26,9 @@
    insert_helper(ClientInfo::TYPE_COMPACT, "O", NULL, NULL, "Osprey Permaseed");
  
 @@ -103,6 +103,8 @@
-   insert_helper(ClientInfo::TYPE_AZUREUS, "HL", NULL, NULL, "Halite");
    insert_helper(ClientInfo::TYPE_AZUREUS, "qB", NULL, NULL, "qBittorrent");
    insert_helper(ClientInfo::TYPE_AZUREUS, "UL", NULL, NULL, "uLeecher!");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "XL", NULL, NULL, "XeiLun");
 +  insert_helper(ClientInfo::TYPE_AZUREUS, "SN", NULL, NULL, "ShareNet");
 +  insert_helper(ClientInfo::TYPE_AZUREUS, "pX", NULL, NULL, "pHoeniX");
  

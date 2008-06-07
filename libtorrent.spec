@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	static_libs	# don't build static library
+%bcond_without	ipv6		# disable IPv6 support
 #
 Summary:	LibTorrent - a BitTorrent library written in C++ for Unix
 Summary(pl.UTF-8):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
@@ -12,6 +13,12 @@ Group:		Libraries
 Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
 # Source0-md5:	0831ca06f8906c7898fd67931ab239c7
 Patch0:		%{name}-client_list.patch
+Patch1:		%{name}-dht_bounds_fix.patch
+Patch2:		%{name}-fix_cull.patch
+Patch3:		%{name}-fix_dht_target.patch
+Patch4:		%{name}-gcc43.patch
+Patch5:		%{name}-lt-ver.patch
+Patch6:		%{name}-tracker_timer_fix.patch
 URL:		http://libtorrent.rakshasa.no/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -64,6 +71,12 @@ Statyczna biblioteka libtorrent.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 # from libtool 1.9f, autoconf 2.60 can't stand it (endless recursion)
 rm -f scripts/{libtool,lt*}.m4
@@ -76,6 +89,7 @@ rm -f scripts/{libtool,lt*}.m4
 %{__automake}
 
 %configure \
+	--%{?with_ipv6:en}%{!?with_ipv6:dis}able-ipv6 \
 	--%{?debug:en}%{!?debug:dis}able-debug \
 	%{?with_static_libs:--enable-static}
 
@@ -97,7 +111,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS README
 %attr(755,root,root) %{_libdir}/libtorrent.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libtorrent.so.9
 
 %files devel
 %defattr(644,root,root,755)

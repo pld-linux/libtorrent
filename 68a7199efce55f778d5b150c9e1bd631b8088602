@@ -1,0 +1,2 @@
+- 0.12.4
+- rm client_list.patch and -bug-1497.patch - already applied in source

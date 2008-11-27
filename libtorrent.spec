@@ -6,22 +6,13 @@
 Summary:	LibTorrent - a BitTorrent library written in C++ for Unix
 Summary(pl.UTF-8):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
-Version:	0.12.2
-Release:	5
+Version:	0.12.4
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	0831ca06f8906c7898fd67931ab239c7
+# Source0-md5:	7e4b4c29a69c86c38e3e60ec11fc2255
 Patch0:		%{name}-client_list.patch
-Patch1:		%{name}-dht_bounds_fix.patch
-Patch2:		%{name}-fix_cull.patch
-Patch3:		%{name}-fix_dht_target.patch
-Patch4:		%{name}-gcc43.patch
-Patch5:		%{name}-lt-ver.patch
-Patch6:		%{name}-tracker_timer_fix.patch
-Patch7:		%{name}-fix_have_timer.patch
-Patch8:		%{name}-fix_pex_leak.patch
-Patch9:		%{name}-fix_write_datagram.patch
 URL:		http://libtorrent.rakshasa.no/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -74,15 +65,6 @@ Statyczna biblioteka libtorrent.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
 
 # from libtool 1.9f, autoconf 2.60 can't stand it (endless recursion)
 rm -f scripts/{libtool,lt*}.m4

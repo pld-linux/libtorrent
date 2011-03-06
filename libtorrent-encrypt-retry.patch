@@ -1,0 +1,219 @@
+Index: test/Makefile.am
+===================================================================
+--- test/Makefile.am	(wersja 1189)
++++ test/Makefile.am	(wersja 1190)
+@@ -6,6 +6,8 @@
+ LibTorrentTest_SOURCES = \
+ 	rak/allocators_test.cc \
+ 	rak/allocators_test.h \
++	rak/ranges_test.cc \
++	rak/ranges_test.h \
+ 	torrent/object_test.cc \
+ 	torrent/object_test.h \
+ 	torrent/object_test_utils.cc \
+Index: test/rak/ranges_test.cc
+===================================================================
+--- test/rak/ranges_test.cc	(wersja 0)
++++ test/rak/ranges_test.cc	(wersja 1190)
+@@ -0,0 +1,41 @@
++#include "config.h"
++
++#import "ranges_test.h"
++
++CPPUNIT_TEST_SUITE_REGISTRATION(RangesTest);
++
++void
++RangesTest::test_basic() {
++}
++
++void
++RangesTest::test_intersect() {
++  rak::ranges<int> range;
++  
++  CPPUNIT_ASSERT(range.intersect_distance(0, 0) == 0);
++  CPPUNIT_ASSERT(range.intersect_distance(0, 10) == 0);
++
++  range.insert(0, 5);
++  
++  CPPUNIT_ASSERT(range.intersect_distance(0, 5) == 5);
++  CPPUNIT_ASSERT(range.intersect_distance(0, 10) == 5);
++  CPPUNIT_ASSERT(range.intersect_distance(-5, 5) == 5);
++  CPPUNIT_ASSERT(range.intersect_distance(-5, 10) == 5);
++
++  CPPUNIT_ASSERT(range.intersect_distance(2, 2) == 0);
++  CPPUNIT_ASSERT(range.intersect_distance(1, 4) == 3);
++  CPPUNIT_ASSERT(range.intersect_distance(1, 10) == 4);
++  CPPUNIT_ASSERT(range.intersect_distance(-5, 4) == 4);
++
++  range.insert(10, 15);
++
++  CPPUNIT_ASSERT(range.intersect_distance(0, 15) == 10);
++  CPPUNIT_ASSERT(range.intersect_distance(0, 20) == 10);
++  CPPUNIT_ASSERT(range.intersect_distance(-5, 15) == 10);
++  CPPUNIT_ASSERT(range.intersect_distance(-5, 20) == 10);
++
++  CPPUNIT_ASSERT(range.intersect_distance(2, 12) == 5);
++  CPPUNIT_ASSERT(range.intersect_distance(1, 14) == 8);
++  CPPUNIT_ASSERT(range.intersect_distance(1, 20) == 9);
++  CPPUNIT_ASSERT(range.intersect_distance(-5, 14) == 9);
++}
+Index: test/rak/ranges_test.h
+===================================================================
+--- test/rak/ranges_test.h	(wersja 0)
++++ test/rak/ranges_test.h	(wersja 1190)
+@@ -0,0 +1,19 @@
++#include <cppunit/extensions/HelperMacros.h>
++
++#include <vector>
++
++#include "rak/ranges.h"
++
++class RangesTest : public CppUnit::TestFixture {
++  CPPUNIT_TEST_SUITE(RangesTest);
++  CPPUNIT_TEST(test_basic);
++  CPPUNIT_TEST(test_intersect);
++  CPPUNIT_TEST_SUITE_END();
++
++public:
++  void setUp() {}
++  void tearDown() {}
++
++  void test_basic();
++  void test_intersect();
++};
+Index: src/protocol/handshake_manager.cc
+===================================================================
+--- src/protocol/handshake_manager.cc	(wersja 1189)
++++ src/protocol/handshake_manager.cc	(wersja 1190)
+@@ -134,9 +134,13 @@
+ 
+ void
+ HandshakeManager::create_outgoing(const rak::socket_address& sa, DownloadMain* download, int encryptionOptions) {
+-  PeerInfo* peerInfo = download->peer_list()->connected(sa.c_sockaddr(),
+-                                                        PeerList::connect_keep_handshakes | PeerList::connect_filter_recent);
++  int connection_options = PeerList::connect_keep_handshakes;
+ 
++  if (!(encryptionOptions & ConnectionManager::encryption_retrying))
++    connection_options |= PeerList::connect_filter_recent;
++
++  PeerInfo* peerInfo = download->peer_list()->connected(sa.c_sockaddr(), connection_options);
++
+   if (peerInfo == NULL || peerInfo->failed_counter() > max_failed)
+     return;
+ 
+@@ -256,7 +260,7 @@
+                                                              error,
+                                                              handshake->download() != NULL ? &handshake->download()->info()->hash() : NULL);
+   if (handshake->encryption()->should_retry()) {
+-    int retry_options = handshake->retry_options();
++    int retry_options = handshake->retry_options() | ConnectionManager::encryption_retrying;
+     DownloadMain* download = handshake->download();
+ 
+     manager->connection_manager()->signal_handshake_log().emit(sa->c_sockaddr(),
+Index: src/torrent/bitfield.cc
+===================================================================
+--- src/torrent/bitfield.cc	(wersja 1189)
++++ src/torrent/bitfield.cc	(wersja 1190)
+@@ -43,7 +43,7 @@
+ 
+ namespace torrent {
+ 
+-// *sigh*
++// Number of set bits in a byte.
+ static const unsigned char bit_count_256[] = 
+ {
+   0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 
+Index: src/torrent/connection_manager.h
+===================================================================
+--- src/torrent/connection_manager.h	(wersja 1189)
++++ src/torrent/connection_manager.h	(wersja 1190)
+@@ -86,6 +86,7 @@
+ 
+   // Internal to libtorrent.
+   static const uint32_t encryption_use_proxy        = (1 << 6);
++  static const uint32_t encryption_retrying         = (1 << 7);
+ 
+   enum {
+     handshake_incoming           = 1,
+Index: src/torrent/hash_string.cc
+===================================================================
+--- src/torrent/hash_string.cc	(wersja 1189)
++++ src/torrent/hash_string.cc	(wersja 1190)
+@@ -60,5 +60,17 @@
+   return first;
+ }
+   
++const char*
++hash_string_to_hex(const HashString& hash, char* first) {
++  return rak::transform_hex(hash.begin(), hash.end(), first);
+ }
+-  
++
++std::string
++hash_string_to_hex_str(const HashString& hash) {
++  std::string str(HashString::size_data * 2, '\0');
++  rak::transform_hex(hash.begin(), hash.end(), str.begin());
++
++  return str;
++}
++
++}
+Index: src/torrent/hash_string.h
+===================================================================
+--- src/torrent/hash_string.h	(wersja 1189)
++++ src/torrent/hash_string.h	(wersja 1190)
+@@ -104,7 +104,10 @@
+ };
+ 
+ const char* hash_string_from_hex_c_str(const char* first, HashString& hash) LIBTORRENT_EXPORT;
+-  
++const char* hash_string_to_hex(const HashString& hash, char* first) LIBTORRENT_EXPORT;
++
++std::string hash_string_to_hex_str(const HashString& hash) LIBTORRENT_EXPORT;
++
+ inline bool
+ operator == (const HashString& one, const HashString& two) {
+   return std::memcmp(one.begin(), two.begin(), HashString::size_data) == 0;
+Index: rak/ranges.h
+===================================================================
+--- rak/ranges.h	(wersja 1189)
++++ rak/ranges.h	(wersja 1190)
+@@ -75,6 +75,9 @@
+ 
+   // Use find with no closest match.
+   bool                has(Type index) const;
++
++  size_t              intersect_distance(Type first, Type last) const;
++  size_t              intersect_distance(value_type range) const;
+ };
+ 
+ template <typename Type>
+@@ -159,6 +162,28 @@
+   return itr != end() && index >= itr->first;
+ }
+ 
++template <typename Type>
++size_t
++ranges<Type>::intersect_distance(Type first, Type last) const {
++  return intersect_distance(std::make_pair(first, last));
+ }
+ 
++template <typename Type>
++size_t
++ranges<Type>::intersect_distance(value_type range) const {
++  const_iterator first = find(range.first);
++
++  if (first == end() || range.second <= first->first)
++    return 0;
++
++  size_t dist = std::min(range.second, first->second) - std::max(range.first, first->first);
++
++  while (++first != end() && range.second > first->first)
++    dist += std::min(range.second, first->second) - first->first;
++
++  return dist;
++}
++
++}
++
+ #endif

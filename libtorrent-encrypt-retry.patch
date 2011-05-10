@@ -1,16 +1,3 @@
-Index: test/Makefile.am
-===================================================================
---- test/Makefile.am	(wersja 1189)
-+++ test/Makefile.am	(wersja 1190)
-@@ -6,6 +6,8 @@
- LibTorrentTest_SOURCES = \
- 	rak/allocators_test.cc \
- 	rak/allocators_test.h \
-+	rak/ranges_test.cc \
-+	rak/ranges_test.h \
- 	torrent/object_test.cc \
- 	torrent/object_test.h \
- 	torrent/object_test_utils.cc \
 Index: test/rak/ranges_test.cc
 ===================================================================
 --- test/rak/ranges_test.cc	(wersja 0)

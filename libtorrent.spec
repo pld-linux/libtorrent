@@ -55,7 +55,7 @@ Pliki programistyczne libtorrent.
 Summary:	Static libtorrent library
 Summary(pl.UTF-8):	Statyczna biblioteka libtorrent
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Static libtorrent library.

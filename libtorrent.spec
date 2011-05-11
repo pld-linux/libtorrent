@@ -6,17 +6,17 @@
 Summary:	LibTorrent - a BitTorrent library written in C++ for Unix
 Summary(pl.UTF-8):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
-Version:	0.12.8
+Version:	0.12.6
 Release:	1
+Epoch:		1
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	5f644b6a96c9ef3c1b6df767eea1e705
+# Source0-md5:	037499ed708aaf72988cee60e5a8d96b
 Patch0:		%{name}-client_list.patch
 URL:		http://libtorrent.rakshasa.no/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	cppunit-devel >= 1.9.6
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	openssl-devel >= 0.9.7d
@@ -41,7 +41,7 @@ select.
 Summary:	Development files for libtorrent
 Summary(pl.UTF-8):	Pliki programistyczne libtorrent
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	libsigc++-devel >= 2.0
 Requires:	openssl-devel >= 0.9.7d
 
@@ -68,7 +68,7 @@ Statyczna biblioteka libtorrent.
 %patch0 -p1
 
 # from libtool 1.9f, autoconf 2.60 can't stand it (endless recursion)
-%{__rm} scripts/{libtool,lt*}.m4
+rm -f scripts/{libtool,lt*}.m4
 
 %build
 %{__libtoolize}
@@ -100,7 +100,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS README
 %attr(755,root,root) %{_libdir}/libtorrent.so.*.*.*
-%%attr(755,root,root) %ghost %{_libdir}/libtorrent.so.14
+%attr(755,root,root) %ghost %{_libdir}/libtorrent.so.11
 
 %files devel
 %defattr(644,root,root,755)

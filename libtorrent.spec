@@ -68,7 +68,7 @@ Statyczna biblioteka libtorrent.
 %patch0 -p1
 
 # from libtool 1.9f, autoconf 2.60 can't stand it (endless recursion)
-rm -f scripts/{libtool,lt*}.m4
+%{__rm} scripts/{libtool,lt*}.m4
 
 %build
 %{__libtoolize}

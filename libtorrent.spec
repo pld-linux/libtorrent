@@ -17,6 +17,7 @@ Patch0:		%{name}-client_list.patch
 URL:		http://libtorrent.rakshasa.no/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
+BuildRequires:	cppunit-devel >= 1.9.6
 BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	openssl-devel >= 0.9.7d

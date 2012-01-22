@@ -66,6 +66,10 @@ Static libtorrent library.
 Statyczna biblioteka libtorrent.
 
 %prep
+%if "%{version}" == "0.13.0"
+echo "WARNING Version 0.13.0 is probably unstable, check it first!"
+exit 1
+%endif
 %setup -q
 %patch0 -p1
 

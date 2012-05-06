@@ -1,0 +1,12 @@
+--- libtorrent-0.13.2/src/Makefile.am~	2012-02-14 04:39:45.000000000 +0100
++++ libtorrent-0.13.2/src/Makefile.am	2012-05-06 09:58:35.151581629 +0200
+@@ -23,7 +23,8 @@
+ 	net/libsub_net.la \
+ 	protocol/libsub_protocol.la \
+ 	tracker/libsub_tracker.la \
+-	utils/libsub_utils.la
++	utils/libsub_utils.la \
++	-lpthread
+ 
+ libtorrent_la_SOURCES = \
+ 	globals.cc \

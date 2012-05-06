@@ -67,11 +67,11 @@ Static libtorrent library.
 Statyczna biblioteka libtorrent.
 
 %prep
-#v=%{version}; IFS=.; set -- $v
-#if [ $(($2 % 2)) = 1 ]; then
-#	echo "WARNING Version %{version} is probably unstable, check it first!"
-#	exit 1
-#fi
+v=%{version}; IFS=.; set -- $v
+if [ $(($2 % 2)) = 0 ]; then
+	echo "WARNING Version %{version} is probably unstable, check it first!"
+	exit 1
+fi
 %setup -q
 %patch0 -p1
 %patch1 -p1

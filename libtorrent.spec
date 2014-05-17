@@ -7,16 +7,16 @@ Summary:	LibTorrent - a BitTorrent library written in C++ for Unix
 Summary(pl.UTF-8):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
 # keep stable line, see URL below
-Version:	0.13.2
+Version:	0.13.4
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Libraries
 Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	96c0b81501357df402ab592f59ecaeab
+# Source0-md5:	e82f380a9d4b55b379e0e73339c73895
 Patch0:		%{name}-client_list.patch
 Patch1:		%{name}-build.patch
-URL:		http://libtorrent.rakshasa.no/
+URL:		https://github.com/rakshasa/rtorrent/wiki
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	cppunit-devel >= 1.9.6
@@ -89,7 +89,8 @@ fi
 %configure \
 	--%{?with_ipv6:en}%{!?with_ipv6:dis}able-ipv6 \
 	--%{?debug:en}%{!?debug:dis}able-debug \
-	%{?with_static_libs:--enable-static}
+	%{?with_static_libs:--enable-static} \
+	--enable-python-binding
 
 %{__make}
 
@@ -109,7 +110,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS README
 %attr(755,root,root) %{_libdir}/libtorrent.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libtorrent.so.14
+%attr(755,root,root) %ghost %{_libdir}/libtorrent.so.18
 
 %files devel
 %defattr(644,root,root,755)

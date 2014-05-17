@@ -6,7 +6,7 @@
  	tracker/libsub_tracker.la \
 -	utils/libsub_utils.la
 +	utils/libsub_utils.la \
-+	-lpthread
++	-lpthread -lz
  
  libtorrent_la_SOURCES = \
  	globals.cc \

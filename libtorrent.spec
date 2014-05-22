@@ -21,7 +21,8 @@ BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	cppunit-devel >= 1.9.6
 BuildRequires:	libsigc++-devel >= 2.0
-BuildRequires:	libtool >= 2:1.5
+BuildRequires:	libstdc++-devel
+BuildRequires:	libtool >= 2:2
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -46,6 +47,7 @@ Summary(pl.UTF-8):	Pliki programistyczne libtorrent
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	libsigc++-devel >= 2.0
+Requires:	libstdc++-devel
 Requires:	openssl-devel >= 0.9.7d
 
 %description devel
@@ -76,7 +78,7 @@ fi
 %patch0 -p1
 %patch1 -p1
 
-# from libtool 1.9f, autoconf 2.60 can't stand it (endless recursion)
+# force refresh
 %{__rm} scripts/{libtool,lt*}.m4
 
 %build

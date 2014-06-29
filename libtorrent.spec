@@ -8,7 +8,7 @@ Summary(pl.UTF-8):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
 # keep stable line, see URL below
 Version:	0.13.4
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v2+
 Group:		Libraries
@@ -16,6 +16,7 @@ Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
 # Source0-md5:	e82f380a9d4b55b379e0e73339c73895
 Patch0:		%{name}-client_list.patch
 Patch1:		%{name}-build.patch
+Patch2:		libtorrent-bencoded-error.patch
 URL:		https://github.com/rakshasa/rtorrent/wiki
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -77,6 +78,7 @@ fi
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # force refresh
 %{__rm} scripts/{libtool,lt*}.m4

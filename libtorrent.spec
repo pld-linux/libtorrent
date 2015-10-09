@@ -7,13 +7,13 @@ Summary:	LibTorrent - a BitTorrent library written in C++ for Unix
 Summary(pl.UTF-8):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
 # keep stable line, see URL below
-Version:	0.13.4
-Release:	3
+Version:	0.13.6
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Libraries
-Source0:	http://libtorrent.rakshasa.no/downloads/%{name}-%{version}.tar.gz
-# Source0-md5:	e82f380a9d4b55b379e0e73339c73895
+Source0:	http://rtorrent.net/downloads/%{name}-%{version}.tar.gz
+# Source0-md5:	66f18044432a62c006c75f6d0bb4d7dc
 Patch0:		%{name}-client_list.patch
 Patch1:		%{name}-build.patch
 Patch2:		libtorrent-bencoded-error.patch
@@ -21,11 +21,11 @@ URL:		https://github.com/rakshasa/rtorrent/wiki
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	cppunit-devel >= 1.9.6
-BuildRequires:	libsigc++-devel >= 2.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2
 BuildRequires:	openssl-devel >= 0.9.7d
 BuildRequires:	pkgconfig
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -47,9 +47,9 @@ Summary:	Development files for libtorrent
 Summary(pl.UTF-8):	Pliki programistyczne libtorrent
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	libsigc++-devel >= 2.0
 Requires:	libstdc++-devel
 Requires:	openssl-devel >= 0.9.7d
+Requires:	zlib-devel
 
 %description devel
 Development files for libtorrent.
@@ -116,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS README
 %attr(755,root,root) %{_libdir}/libtorrent.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libtorrent.so.18
+%attr(755,root,root) %ghost %{_libdir}/libtorrent.so.19
 
 %files devel
 %defattr(644,root,root,755)

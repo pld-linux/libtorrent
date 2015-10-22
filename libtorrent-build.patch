@@ -10,3 +10,17 @@
  
  libtorrent_la_SOURCES = \
  	globals.cc \
+diff -urN libtorrent-0.13.6.org/scripts/ax_check_zlib.m4 libtorrent-0.13.6/scripts/ax_check_zlib.m4
+--- libtorrent-0.13.6.org/scripts/ax_check_zlib.m4	2015-08-08 17:01:32.000000000 +0200
++++ libtorrent-0.13.6/scripts/ax_check_zlib.m4	2015-10-22 10:34:10.898495878 +0200
+@@ -104,10 +104,6 @@
+ 
+   ZLIB_OLD_LDFLAGS=$LDFLAGS
+   ZLIB_OLD_CPPFLAGS=$CPPFLAGS
+-  if test -n "${ZLIB_HOME}"; then
+-        LDFLAGS="$LDFLAGS -L${ZLIB_HOME}/lib"
+-        CPPFLAGS="$CPPFLAGS -I${ZLIB_HOME}/include"
+-  fi
+   AC_LANG_SAVE
+   AC_LANG_C
+   AC_CHECK_LIB([z], [inflateEnd], [zlib_cv_libz=yes], [zlib_cv_libz=no])

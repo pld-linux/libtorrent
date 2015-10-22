@@ -12,7 +12,7 @@
  	globals.cc \
 diff -urN libtorrent-0.13.6.org/scripts/ax_check_zlib.m4 libtorrent-0.13.6/scripts/ax_check_zlib.m4
 --- libtorrent-0.13.6.org/scripts/ax_check_zlib.m4	2015-08-08 17:01:32.000000000 +0200
-+++ libtorrent-0.13.6/scripts/ax_check_zlib.m4	2015-10-22 10:34:10.898495878 +0200
++++ libtorrent-0.13.6/scripts/ax_check_zlib.m4	2015-10-22 10:42:40.508124675 +0200
 @@ -104,10 +104,6 @@
  
    ZLIB_OLD_LDFLAGS=$LDFLAGS
@@ -24,3 +24,12 @@ diff -urN libtorrent-0.13.6.org/scripts/ax_check_zlib.m4 libtorrent-0.13.6/scrip
    AC_LANG_SAVE
    AC_LANG_C
    AC_CHECK_LIB([z], [inflateEnd], [zlib_cv_libz=yes], [zlib_cv_libz=no])
+@@ -119,8 +115,6 @@
+     # If both library and header were found, action-if-found
+     #
+     m4_ifblank([$1],[
+-                CPPFLAGS="$CPPFLAGS -I${ZLIB_HOME}/include"
+-                LDFLAGS="$LDFLAGS -L${ZLIB_HOME}/lib"
+                 LIBS="-lz $LIBS"
+                 AC_DEFINE([HAVE_LIBZ], [1],
+                           [Define to 1 if you have `z' library (-lz)])

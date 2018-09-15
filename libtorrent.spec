@@ -8,7 +8,7 @@ Summary(pl.UTF-8):	LibTorrent - biblioteka BitTorrenta napisana w C++ dla Uniksa
 Name:		libtorrent
 # keep stable line, see URL below
 Version:	0.13.6
-Release:	3
+Release:	4
 Epoch:		1
 License:	GPL v2+
 Group:		Libraries

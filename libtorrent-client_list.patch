@@ -1,8 +1,9 @@
---- libtorrent-0.12.3/src/torrent/peer/client_list.cc.orig	2008-05-07 14:19:13.000000000 +0200
-+++ libtorrent-0.12.3/src/torrent/peer/client_list.cc	2008-10-26 19:22:03.380552372 +0100
-@@ -73,8 +73,10 @@
-   insert_helper(ClientInfo::TYPE_AZUREUS, "BX", NULL, NULL, "Bittorrent X");
+diff -urNp -x '*.orig' libtorrent-0.13.8.org/src/torrent/peer/client_list.cc libtorrent-0.13.8/src/torrent/peer/client_list.cc
+--- libtorrent-0.13.8.org/src/torrent/peer/client_list.cc	2019-07-19 13:44:08.000000000 +0200
++++ libtorrent-0.13.8/src/torrent/peer/client_list.cc	2021-10-05 23:27:46.903393391 +0200
+@@ -75,8 +75,10 @@ ClientList::ClientList() {
    insert_helper(ClientInfo::TYPE_AZUREUS, "BS", NULL, NULL, "BTSlave");
+   insert_helper(ClientInfo::TYPE_AZUREUS, "BT", NULL, NULL, "BBTor");
    insert_helper(ClientInfo::TYPE_AZUREUS, "CT", NULL, NULL, "CTorrent");
 -  insert_helper(ClientInfo::TYPE_AZUREUS, "DE", NULL, NULL, "DelugeTorrent");
 +  insert_helper(ClientInfo::TYPE_AZUREUS, "DE", NULL, NULL, "Deluge");
@@ -12,7 +13,7 @@
    insert_helper(ClientInfo::TYPE_AZUREUS, "LP", NULL, NULL, "Lphant");
    insert_helper(ClientInfo::TYPE_AZUREUS, "MT", NULL, NULL, "MoonlightTorrent");
    insert_helper(ClientInfo::TYPE_AZUREUS, "MP", NULL, NULL, "MooPolice");
-@@ -84,13 +86,13 @@
+@@ -86,13 +88,13 @@ ClientList::ClientList() {
    insert_helper(ClientInfo::TYPE_AZUREUS, "SS", NULL, NULL, "SwarmScope");
    insert_helper(ClientInfo::TYPE_AZUREUS, "SB", NULL, NULL, "Swiftbit");
    insert_helper(ClientInfo::TYPE_AZUREUS, "TN", NULL, NULL, "TorrentDotNET");
@@ -30,7 +31,7 @@
    insert_helper(ClientInfo::TYPE_COMPACT, "U", NULL, NULL, "UPnP NAT BitTorrent");
    insert_helper(ClientInfo::TYPE_COMPACT, "O", NULL, NULL, "Osprey Permaseed");
  
-@@ -100,10 +102,14 @@
+@@ -102,10 +104,14 @@ ClientList::ClientList() {
    insert_helper(ClientInfo::TYPE_AZUREUS, "BG", NULL, NULL, "BTG");
    insert_helper(ClientInfo::TYPE_AZUREUS, "BR", NULL, NULL, "BitRocket");
    insert_helper(ClientInfo::TYPE_AZUREUS, "EB", NULL, NULL, "EBit");
@@ -46,7 +47,7 @@
  
    insert_helper(ClientInfo::TYPE_COMPACT, "R", NULL, NULL, "Tribler");
  }
-@@ -169,6 +175,13 @@
+@@ -171,6 +177,13 @@ ClientList::retrieve_id(ClientInfo* dest
        std::isxdigit(id[3]) && std::isxdigit(id[4]) && std::isxdigit(id[5]) && std::isxdigit(id[6])) {
      dest->set_type(ClientInfo::TYPE_AZUREUS);
  
@@ -60,7 +61,7 @@
      dest->mutable_key()[0] = id[1];
      dest->mutable_key()[1] = id[2];
      
-@@ -176,15 +189,22 @@
+@@ -178,15 +191,22 @@ ClientList::retrieve_id(ClientInfo* dest
        dest->mutable_version()[i] = dest->mutable_upper_version()[i] = rak::hexchar_to_value(id[3 + i]);
  
    } else if (std::isalpha(id[0]) && id[4] == '-' &&
